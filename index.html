@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CountriesApp">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Countries & Capitals</title>
+    <link rel="stylesheet" type="text/css" href="countriesapp.css">
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="countriesapp.js"></script>
+ 
+  </head>
+  <body ng-controller="MainCtrl">
+    <div class="header">
+       <h1>Countries & Capitals</h1>
+    </div>
+
+    <hr>
+
+    <div class="view-container">
+       <div ng-view></div>
+    </div>
+  	
+
+
+
+  </body>
+</html>

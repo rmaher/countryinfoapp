@@ -1,0 +1,21 @@
+{
+  "name": "countriesapp",
+  "main": "index.html",
+  "version": "0.0.0",
+  "authors": [
+    "Rachel Maher <rachelelizabethmaher@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-http-auth": "~1.2.2"
+  }
+}
