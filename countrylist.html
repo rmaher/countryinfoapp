@@ -1,9 +1,29 @@
    <div>
-       <div class="results" ng-if="results">
-       	   <div ng-repeat="results in results">
-       	   	    <p>things happened</p>
-                <p>{{ geonames.country }}</p>
-       	   </div>
+
+       <div class="results" ng-if="countries">
+       	   
+       	   	    
+                <table class="table-display" align="center">
+                	<tr>
+                	    <th>Name</th>
+       	   	    		<th>Country Code</th>
+       	   	    		<th>Capital</th>
+       	   	    		<th>Area in km<sup>2</sup></th>
+       	   	    		<th>Population</th>
+       	   	    		<th>Continent</th>
+       	   	    	</tr>
+
+       	   	    	<tr ng-repeat="country in countries">
+       	   	    		<td><a href="#/countrydetail/{{ country.countryName }}">{{ country.countryName }}</a></td>
+       	   	    		<td>{{ country.countryCode }}</td>
+       	   	    		<td>{{ country.areaInSqKm }}</td>
+       	   	    		<td>{{ country.population }}</td>
+       	   	    		<td>{{ country.population }}</td>
+       	   	    		<td>{{ country.continent }}</td>
+       	   	    	</tr>
+       	   	    </table>
+
+       	   
 
        </div>
     </div>
