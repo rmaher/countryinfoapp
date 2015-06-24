@@ -1,26 +1,38 @@
 angular.module('CountriesApp', ['ngRoute'])
-    .value('countriesRte',['countryid'])
     .config(function($routeProvider) {
     	$routeProvider.when('/', {
     		templateUrl : 'home.html',
     	})
     	.when('/countrylist', {
     		templateUrl: 'countrylist.html',
-    		controller: 'ListCtrl'
+    		controller: 'ListCtrl',
+            resolve: {
+             countries: function($route, $location, $http) {
+               var countryUrl = "http://api.geonames.org/countryInfoJSON?username=rachelelizabethmaher";
+               return $http.get(countryUrl);
+             }
+            }
     	})
-        .when('/country/:countryid', {
+        .when('/country/:countryName', {
             templateUrl: 'countrydetail.html',
             controller: 'CountryCtrl',
             resolve : {
-                countryid: function($route, $location) {
-                    var countryid = $route.current.params.countryid;
-                    if(countriesRte.indexOf(countryid) == -1 ) {
-                        $location.path('/error');
-                        return;
-                    }
-                    return countryid;
+                country: function($route, $location, $http, $q) {
+                    var countryName = $route.current.params.countryName;
+
+                    var countryUrl = "http://api.geonames.org/countryInfoJSON?username=rachelelizabethmaher&country=" + $countryName;
+                    var deferred = $q.defer();
+
+                    $http.get(countryUrl).then( function(response) {
+                            deferred = $q.defer();
+                        }, function(error) {
+                            deferred.reject('error!')
+                        })
+ 
+                        return deferred.promise;
+                    
+                    },
                 }
-            }
         })
     	.when('/error', {
     		template: '<p>Error - Page Not Found</p>'
@@ -32,46 +44,11 @@ angular.module('CountriesApp', ['ngRoute'])
 
     })
 
-    .controller('ListCtrl', function($scope, $http) {
-    	var url = "http://api.geonames.org/countryInfoJSON?username=rachelelizabethmaher";
-    	$http.get(url).
-    		success(function(data) {
-      			$scope.countries = data.geonames;
-				console.log("success");
-    		}).
-    		error(function() {
-      			console.log("ERROR ERROR")
-    		});
+    .controller('ListCtrl', function($scope, $routeParams) {
+  
     		
     })
 
     .controller('CountryCtrl', function($scope, $http) {
-        var countryurl = "http://api.geonames.org/countryInfoJSON?username=rachelelizabethmaher";
-        $http.get(countryurl).
-            success(function(data) {
-                $scope.countries = data.geonames;
-                console.log("country success");
-            }).
-            error(function() {
-                console.log("ERROR ERROR")
-            });
-        var searchurl = "http://api.geonames.org/search?username=rachelelizabethmaher";
-        $http.get(searchurl).
-            success(function(data) {
-                $scope.search = data.geonames;
-                console.log("search success");
-            }).
-            error(function() {
-                console.log("ERROR ERROR")
-            });
-        var neighborurl = "http://api.geonames.org/neighbours?geonameId=" + geonameId + "&username=rachelelizabethmaher";
-        $http.get(neighborurl).
-            success(function(data) {
-                $scope.neighbors = data.geonames;
-                console.log("neighbor success");
-            }).
-            error(function() {
-                console.log("ERROR ERROR")
-            });
-    })
+
 
