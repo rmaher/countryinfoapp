@@ -1,3 +1,8 @@
+body {
+	font-family: "adelle-sans";
+}
+
+
 th, td {
     padding: 5px;
 }
@@ -10,4 +15,34 @@ table, th, td {
 
 h1 {
     text-align: center;
+}
+
+.results {
+	text-align: center;
+}
+
+.map {
+	float: left;
+	margin-left: 20%;
+	margin-top: 5%;
+}
+
+.flag {
+	margin-top: 5%;
+	float: left;
+}
+
+.mapimg {
+	max-width:40%;
+}
+
+.flagimg {
+
+	max-width:35%;
+
+}
+
+.bottom-nav {
+	text-align: center;
+	margin-top: 30%;
 }

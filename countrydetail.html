@@ -1,19 +1,20 @@
-<div class="results" ng-if="countries">
-
-    <div ng-repeat="country in countries">
+<div class="results" ng-if="country">
     	<h3>{{ country.countryName }}</h3>
     	<p>Population of Country: {{ country.population | number }}</p>
     	<p>Area: {{ country.areaInSqKm | number }} km</p>
     	<p>Capital: {{ country.capital }}</p>
-    	<p>Population of Capital: </p>
+    	<p>Population of Capital: {{ country.capital.population }} </p>
     	<p>3 Neighbors: </p>
 
-    	<img src="http://www.geonames.org/flags/x/{{ country.countrycode }}.gif" />
-    	<img src="http://www.geonames.org/img/country/250/{{ country.countrycode }}.png" />
-
-    </div>
-
-
+        <div class="map">
+            <img class="mapimg" ng-src="http://www.geonames.org/img/country/250/{{ country.countryCode }}.png" />
+        </div>
+        <div class="flag">
+        	<img class="flagimg" ng-src="http://www.geonames.org/flags/x/{{ country.countryCode | lowercase }}.gif" />
+        </div>
 </div>
 
-<a href="#/home">Home</a><a href="#/countrylist">Browse Countries</a>
+<div class="bottom-nav">
+    <a href="#/home">Home</a>
+    <a href="#/countrylist">Browse Countries</a>
+</div>
