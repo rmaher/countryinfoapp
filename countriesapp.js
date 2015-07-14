@@ -1,87 +1,83 @@
-angular.module('CountriesApp', ['ngRoute'])
+'use strict';
+
+angular.module('CountriesApp')
+
     .config(function($routeProvider) {
-    	$routeProvider.when('/', {
-    		templateUrl : 'home.html',
-    	})
-    	.when('/countrylist', {
-    		templateUrl: 'countrylist.html',
-    		controller: 'ListCtrl',
-            resolve: {
-             countries: function($route, $location, $http) {
-               var countryUrl = "http://api.geonames.org/countryInfoJSON?username=rachelelizabethmaher";
-               return $http.get(countryUrl);
-             }
-            }
-    	})
+        $routeProvider.when('/', {
+            templateUrl : 'home.html',
+        })
+        .when('/countries', {
+            templateUrl: 'countries.html',
+            controller: 'ListCtrl',
+        })
         .when('/country/:countryCode', {
-            templateUrl: 'countrydetail.html',
-            controller: 'CountryCtrl',
-            resolve : {
-                country: function($route, $location, $http, $q) {
-                    var countryCode = $route.current.params.countryCode;
+            templateUrl: 'country.html',
+            controller: 'CountryCtrl'
+        })
+        .when('/error', {
+            template: '<p>Error - Page Not Found</p>'
+        })
+        .otherwise({redirectTo: '/'});
+    })
+        
+    .factory('Country', function($http, $q) {
+        return {
+          getCountries: function() {
+              var countryUrl = "http://api.geonames.org/countryInfoJSON?username=rachelelizabethmaher&country=" + countryCode;
+              var deferred = $q.defer();
 
-                    var countryUrl = "http://api.geonames.org/countryInfoJSON?username=rachelelizabethmaher&country=" + countryCode;
-                    var deferred = $q.defer();
+                  http.get(countryUrl).then( function(response) {
+                    deferred.resolve(response.data.geonames);
+                  }, function(error) {
+                    deferred.reject('countries error!');
+                  });
 
-                    $http.get(countryUrl).then( function(response) {
-                            deferred.resolve(response.data.geonames);
-                        }, function(error) {
-                            deferred.reject('error!');
-                        });
- 
-                        return deferred.promise;
-                }
-                //capitals: function($http, $q) {
-                    //var capitalUrl = "http://api.geonames.org/searchJSON?username=rachelelizabethmaher&country=" + countryCode + "&q=" + capital;
-                    //var deferred = $q.defer();
-
-                    //$http.get(capitalUrl).then( function(response) {
-                            //deferred.resolve(response.data.geonames);
-                        //}, function(error) {
-                            //deferred.reject('error!');
-                        //});
- 
-                        //return deferred.promise;
-
-                //}
-
-                //neighbours: function($http, $q) {
-                    //var neighborUrl = "http://api.geonames.org/neighbours?geonameId=" + geonameId + "&username=rachelelizabethmaher";
-                    //var deferred = $q.defer();
-
-                    //$http.get(neighborUrl).then( function(response) {
-                            //deferred.resolve(response.data.geonames);
-                        //}, function(error) {
-                            //deferred.reject('error!');
-                        //});
- 
-                        //return deferred.promise;
+                  return deferred.promise;
+          },
                 
-                //}
+          getNeighbors: function() {
+              var neighborUrl = "http://api.geonames.org/neighboursJSON?geonameId=" + geonameId + "&username=rachelelizabethmaher";
+              var deferred = $q.defer();
 
+                  http.get(neighborUrl).then( function(response) {
+                    deferred.resolve(response.data.geonames);
+                  }, function(error) {
+                    deferred.reject('neighbor error!');
+                  });
 
-        }})
-    	.when('/error', {
-    		template: '<p>Error - Page Not Found</p>'
-    	})
-    	.otherwise({redirectTo: '/'});
-    }) 
+                  return deferred.promise;
+
+          },
+                
+          getCapial: function() {
+              var capitalUrl = "";
+              var deffered = $q.defer();
+
+              http.get(capitalUrl).then( function(response) {
+                deferred.resolve(response.data.geonames);
+              }, function(error) {
+                deferred.reject('capital error!');
+              });
+              
+              return deferred.promise;
+
+          }
+        }
+    })
+  
 
     .controller('MainCtrl', function($scope) {
 
     })
 
-    .controller('ListCtrl', function($scope, countries) {
-      $scope.countries = countries.data.geonames;
+    .controller('ListCtrl', function($scope, getCountries) {
+      $scope.countries = countries;
     		
     })
 
-    .controller('CountryCtrl', function($scope, country) {
+    .controller('CountryCtrl', function($scope, getCountries, getNeighbors, getCapital) {
       
-      $scope.country = country[0];   
+      $scope.country = country;   
 
-
-      //$scope.neighbours = neighbours[0]
-      //console.log(neighbours);
     });
 
