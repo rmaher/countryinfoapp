@@ -49,7 +49,7 @@ angular.module('CountriesApp')
 
           },
                 
-          getCapial: function() {
+          getCapital: function() {
               var capitalUrl = "";
               var deffered = $q.defer();
 
