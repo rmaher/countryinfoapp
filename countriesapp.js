@@ -72,12 +72,11 @@ angular.module('CountriesApp')
 
     .controller('ListCtrl', function($scope, getCountries) {
       $scope.countries = countries;
-    		
+    	
     })
 
     .controller('CountryCtrl', function($scope, getCountries, getNeighbors, getCapital) {
-      
       $scope.country = country;   
-
+      
     });
 

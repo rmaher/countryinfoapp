@@ -5,7 +5,7 @@
        	   	    
                 <table class="table-display" align="center">
                 	<tr>
-                	    <th>Name</th>
+                	  <th>Name</th>
        	   	    		<th>Country Code</th>
        	   	    		<th>Capital</th>
        	   	    		<th>Area in km<sup>2</sup></th>
@@ -14,8 +14,8 @@
        	   	    	</tr>
 
        	   	    	<tr ng-repeat="country in countries">
-       	   	    		<td><a href="#/country/{{ country.countryCode }}">{{ country.countryName }}</a></td>
-       	   	    		<td>{{ country.countryCode }}</td>
+       	   	    	  <td><a href="#/country/{{ data.countryCode }}">{{ data.countryName }}</a></td>
+       	   	    		<td>{{ data.countryCode }}</td>
        	   	    		<td>{{ country.areaInSqKm }}</td>
        	   	    		<td>{{ country.population }}</td>
        	   	    		<td>{{ country.population }}</td>
@@ -28,5 +28,5 @@
        </div>
     </div>
     <div class="bottom-nav">
-       <a href="#/home">Home</a>
+       <a href="/home">Home</a>
     </div>
